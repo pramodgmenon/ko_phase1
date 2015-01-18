@@ -10,7 +10,7 @@ $page = new Page;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "KOLAPILLY AYURVEDA";	// page Title
 	$page->page_name = 'index';		// page name for menu and other purpose
-	$page->layout = 'home.html';		// layout name
+	$page->layout = 'gallery.html';		// layout name
 
 
 	$page->conf_list = array("conf.php");
