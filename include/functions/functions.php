@@ -77,7 +77,23 @@
 	}
 
 
-
+function generate_language_links(){
+	GLOBAL $myconnection;
+	$query = "SELECT id, name FROM languages WHERE publish='".CONTENT_PUBLISH."' ORDER BY id" ;
+	$rsRES = mysql_query($query) or die (mysql_error() . $query);
+	if(mysql_num_rows($rsRES)==0){
+		// $this->debug_output.="From Function generate_language_links :: No language is Published. <br/>";
+	}else{
+		while ($arrRES = mysql_fetch_array($rsRES)) {
+			if($arrRES['id']== $_SESSION[SESSION_TITLE.'gLANGUAGE']){
+			echo '&nbsp;'.$arrRES['name'].'&nbsp;';
+		}else{
+			echo '&nbsp;<a href="set_language.php?h_c='.md5("CONTENT_LANG").'&lang='.$arrRES['id'].'&url='.$_SERVER['REQUEST_URI'].' " >'.$arrRES['name'].'</a>&nbsp;';
+		}
+	}
+	echo "&nbsp;&nbsp;&nbsp;";
+	}
+}
 
 
 
