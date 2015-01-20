@@ -24,21 +24,21 @@ $page = new Page;
 	//$page->dynamic_content_list = array("index.php");
 
 	$index=0;
-	$content_list[$index]['file_name']='inc_top_menu.php';
-	$content_list[$index]['var_name']='top_menu';
-	$index++;
+	//$content_list[$index]['file_name']='inc_top_menu.php';
+	//$content_list[$index]['var_name']='top_menu';
+	//$index++;
+//
+	//$content_list[$index]['file_name']='inc_menu.php';
+	//$content_list[$index]['var_name']='menu';
+	//$index++;
 
-	$content_list[$index]['file_name']='inc_menu.php';
-	$content_list[$index]['var_name']='menu';
-	$index++;
-
-	$content_list[$index]['file_name']='inc_index.php';
+	$content_list[$index]['file_name']='inc_thankyou.php';
 	$content_list[$index]['var_name']='content';
 	$index++;
 
-	$content_list[$index]['file_name']='inc_footer.php';
-	$content_list[$index]['var_name']='footer';
-	$index++;
+	//$content_list[$index]['file_name']='inc_footer.php';
+	//$content_list[$index]['var_name']='footer';
+	//$index++;
 
 
 
