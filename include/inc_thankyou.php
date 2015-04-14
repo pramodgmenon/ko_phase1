@@ -1,5 +1,5 @@
 <?php
-if (isset($_POST['submit']) && $_POST['submit'] == "Send Message" ){
+if (isset($_POST['submit']) && $_POST['submit'] == $this->content->get_content(CONTENT_TYPE_HTML,'Send Message',"index") ){
 $contactus_message = "";
 if ( $_POST['name'] == "" ){
     $contactus_message .= "<br/> Please Fill Name.";
@@ -35,10 +35,12 @@ if ( isset($contactus_message) && $contactus_message == "" ){
                 kolapillyayurveda.com<br />";
                mail("kolapillyayurveda@gmail.com",$str_subject,$message,$headers);
                 //mail("pramodgmenon@gmail.com",$str_subject,$message,$headers);
-								$contactus_message = "Thank you for contacting us.";
+								$contactus_message = $this->content->get_content(CONTENT_TYPE_HTML,"Message OK",$this->page_name);
 }
 
 
+}else{
+	$contactus_message = $this->content->get_content(CONTENT_TYPE_HTML,"Message Not OK",$this->page_name);
 }
 ?>
 

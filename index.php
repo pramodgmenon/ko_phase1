@@ -21,7 +21,7 @@ $page = new Page;
 
 
 	$page->use_dynamic_content = true;
-	//$page->dynamic_content_list = array("index.php");
+	$page->dynamic_content_list = array("index.php");
 
 //	$index=0;
 //	$content_list[$index]['file_name']='inc_top_menu.php';

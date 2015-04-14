@@ -9,7 +9,7 @@ $page = new Page;
 	$page->root_path = ROOT_PATH;
 	$page->current_url = $current_url;	// current url for pages
 	$page->title = "KOLAPILLY AYURVEDA";	// page Title
-	$page->page_name = 'index';		// page name for menu and other purpose
+	$page->page_name = 'gallery';		// page name for menu and other purpose
 	$page->layout = 'gallery.html';		// layout name
 
 
@@ -21,7 +21,7 @@ $page = new Page;
 
 
 	$page->use_dynamic_content = true;
-	//$page->dynamic_content_list = array("index.php");
+	$page->dynamic_content_list = array("gallery.php");
 
 	$index=0;
 	$content_list[$index]['file_name']='inc_top_menu.php';

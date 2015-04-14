@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>KOLAPILLY AYURVEDA :: Dr. Mahesh Kolapilly</title>
+		<title><?php echo $this->content->get_content(CONTENT_TYPE_TEXT,"Title",$this->page_name); ?></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <meta name= "keywords" content= "Kolapilly Ayurveda,  Dr. Mahesh Kolapilly B.A.M.S, Multispeciality Clinic at Thamanam, paediatrics , skin diseases">
 <meta name= "description" content= "A young Ayurvedic graduate with an established out patient clinician, hailing from a family of traditional vaidyas and a specialist in the field of paediatrics and skin diseases. Kolapilly Ayurveda,	Multispeciality Clinic at Thammanam,Kochi, India.">
@@ -29,31 +29,24 @@
 		<!-- Header -->
 			<header id="header">
 				<a href="index.php" class="image logo"><img src="images/profile/dr.mahesh.k.m.jpg" alt="" /></a>
-				<h1><strong>I am Dr. Mahesh Kolapilly </strong>,<br />
-				B.A.M.S,<br />
-Consultation Time : <strong>10.00 AM - 1.00 PM</strong>
+				<h1><?php echo $this->content->get_content(CONTENT_TYPE_HTML,"Intro",$this->page_name); ?>
+<?php echo $this->content->get_content(CONTENT_TYPE_HTML,"Consultation Time",'index'); ?> : <strong>10.00 AM - 1.00 PM</strong>
 				</h1>
 			</header>
 
 		<!-- Main -->
 
 <span id="language">
-	<?php // generate_language_links() ?>
+	<?php  generate_language_links() ?>
 </span>
 			<div id="main">
 
 				<!-- One -->
 					<section id="one">
 						<header class="major">
-							<h2>Dr. MAHESH KOLAPILLY B.A.M.S</h2>
+							<h2><?php echo $this->content->get_content(CONTENT_TYPE_HTML,"Mahesh Name","index"); ?></h2>
 						</header>
-						<p>A young Ayurvedic graduate with an established out patient clinician, hailing from a family of traditional vaidyas and a specialist in the field of paediatrics and skin diseases.
-<br /><br />
-The Kolapilly family, at Vennala in Ernakulam Dist. has a tradition of centuries in Ayurvedic treament as well as production of ayurvedic medicines. The renowned physician Govindan Vaidyar, practitioner in Ayurvedic treatment, especially in paediatrics and psychiatry, is the pioneer in this tradition.
-<br /><br />
- During 1950s, under the initiative of  Sri. Govindan Vaidyar, a center was established at Thammanam, in the old Travancore-Kochi border, with the purpose of conducting trade and for storage of  Ayurvedic medicines. By 1954, this centre was developed into “Sreekrishna Vilasam Ayurveda Bala Vaidya Sala”, a center through which his expertise and experience in ayurvedic practice became beneficial to the local people. 
-<br /><br />
-Succeeding Sri. Govindan Vaidyar, from 1975 onwards, his son Sri. Madhavan Vaidyan, a leading figure in paediatrics in ayurveda of that time, was running the clinic. After his demise, his son Dr. Mahesh Kolapilly B.A.M.S took this position. From the year 2001 onwards Dr. Mahesh has been practicing at “Sreekrishna Vilasam Ayurveda Bala Vaidya sala”, a center through which the great traditional  knowledge of ayurvedic medication comes to the benefit of common man. Dr. Mahesh started “Kolapilly Ayurvedic Multispeciality Clinic” at Thammanam, where his skill and specialisation  in “Kaya Chikilsa” and paediatrics can be applied with the help of the tremendous potentials of “Panchakarma Chikilsa”</p>
+						<?php echo $this->content->get_content(CONTENT_TYPE_HTML,"Mahesh Content",$this->page_name); ?>
 								<ul class="actions">
 									<li><a href="<?php if(is_mobile()){ echo'tel:04842333057';}else{ echo'#';} ?>" class="button">CALL 0484 233 30 57</a></li>
 								</ul> 
@@ -61,7 +54,7 @@ Succeeding Sri. Govindan Vaidyar, from 1975 onwards, his son Sri. Madhavan Vaidy
 									<li><a href="<?php if(is_mobile()){ echo'tel:+919847258057';}else{ echo'#';} ?>" class="button">CALL +91 9847 25 8057</a></li>
 								</ul> 
 								<ul class="actions">
-									<li><a href="index.php" class="button">BACK TO HOME</a></li>
+									<li><a href="index.php" class="button"><?php echo $this->content->get_content(CONTENT_TYPE_HTML,"BACK TO HOME",'index'); ?></a></li>
 								</ul>
 					</section>
 

@@ -42,7 +42,11 @@ class Content {
 	var $total_records = "";
 
 
-	function get_content($contenttype_id,$name,$page_name,$content="",$description="",$language_id="") {
+
+
+// only getting content
+
+	function get_content($contenttype_id,$name,$page_name,$language_id="") {
 		if($language_id==""){
 			if(isset($_SESSION[SESSION_TITLE.'gLANGUAGE']) && $_SESSION[SESSION_TITLE.'gLANGUAGE'] > 0){
 				$language_id=$_SESSION[SESSION_TITLE.'gLANGUAGE'];
@@ -50,7 +54,61 @@ class Content {
 				$language_id=CONTENT_LANG_ENGLISH;
 			}
 		}
+
+
+		$strSQL = "SELECT C.id, C.content, C.publish FROM contents C, pages P WHERE P.id= C.page_id AND P.name='".addslashes($page_name)."' AND C.language_id='".$language_id."'  AND C.contenttype_id='".$contenttype_id."' AND C.name='".addslashes($name)."' ";
+		$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
+		$count_content= mysql_num_rows($result);
+
+		if ($count_content > 0) {
+			$row_content = mysql_fetch_assoc($result);
+			if($row_content['publish'] == CONTENT_NOT_PUBLISH) {
+				$content = "Not Published";
+			}else{
+				$content = stripslashes($row_content['content']);
+			}
+			$content_id = $row_content['id'];
+
+		}else{
+				$content ="No content found!";
+		}
+
+
+	if($this->editor_mode == true && $count_content > 0 ){
+		$content = '<div style=" cursor:pointer;border:1px;border-color:red;border-style:solid; color:inherit;" onclick="window.open(\''.$this->editor_page.'?id='.$content_id.'\',\'popuppage\',\'width='.$this->editor_page_width.',menubar=0,location=0,resizable=1,scrollbars=yes,height='.$this->editor_page_height.',top='.$this->editor_page_top.',left='.$this->editor_page_left.'\');" >'.$content.'</div>';
+	}
+	
+		return $content;
+
+ 
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+	function set_content($contenttype_id,$name,$page_name,$content="",$description="",$language_id="", $publish = "") {
+		if($language_id==""){
+			if(isset($_SESSION[SESSION_TITLE.'gLANGUAGE']) && $_SESSION[SESSION_TITLE.'gLANGUAGE'] > 0){
+				$language_id=$_SESSION[SESSION_TITLE.'gLANGUAGE'];
+			}else{
+				$language_id=CONTENT_LANG_ENGLISH;
+			}
+		}
+		if($publish==""){
+				$publish=CONTENT_NOT_PUBLISH;
+		}
 		 
+
+
+
 		$strSQL = "SELECT C.id, C.content, C.publish FROM contents C, pages P WHERE P.id= C.page_id AND P.name='".addslashes($page_name)."' AND C.language_id='".$language_id."'  AND C.contenttype_id='".$contenttype_id."' AND C.name='".addslashes($name)."' ";
 		$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
 		$count_content= mysql_num_rows($result);
@@ -77,7 +135,7 @@ class Content {
 				$page_id = mysql_insert_id();
 			}
 
-			$strSQL = "INSERT INTO `contents` (  `name` , `page_id` , `content` , `description` , `language_id` , `contenttype_id` )  VALUES ('".addslashes($name)."', '".$page_id."', '".addslashes($content)."', '".addslashes($description)."', '".$language_id."', '".$contenttype_id."' )";
+			$strSQL = "INSERT INTO `contents` (  `name` , `page_id` , `content` , `description` , `language_id` , `contenttype_id`, `publish` )  VALUES ('".addslashes($name)."', '".$page_id."', '".addslashes($content)."', '".addslashes($description)."', '".$language_id."', '".$contenttype_id."', '" .$publish . "' )";
 			$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
 			$content = stripslashes($content); 
 			$content_id = mysql_insert_id();

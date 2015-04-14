@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>KOLAPILLY AYURVEDA :: THANK YOU</title>
+		<title><?php echo $this->content->get_content(CONTENT_TYPE_TEXT,"Title",$this->page_name); ?></title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta name="description" content="" />
 		<meta name="keywords" content="" />
@@ -37,7 +37,7 @@
 		<!-- Main -->
 
 <span id="language">
-	<?php // generate_language_links() ?>
+	<?php  generate_language_links() ?>
 </span>
 			<div id="main">
 
@@ -56,7 +56,7 @@
 
 				
 				<ul class="actions">
-					<li><a href="index.php" class="button">BACK TO HOME</a></li>
+					<li><a href="index.php" class="button"><?php echo $this->content->get_content(CONTENT_TYPE_HTML,"BACK TO HOME",'index'); ?></a></li>
 				</ul>
 
 			</div>
