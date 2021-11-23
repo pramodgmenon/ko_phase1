@@ -27,17 +27,17 @@ function __construct($connection){
 }
 function get_id(){
     $strSQL = "SELECT id, name, date,    description,  file,  status_id,  created,  updated,  record_user_id  FROM downloads WHERE name = '".$this->name."'";
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-    if ( mysql_num_rows($rsRES) > 0 ){
-        $this->id = mysql_result($rsRES,0,'id');
-        $this->name = mysql_result($rsRES,0,'name');
-        $this->date = mysql_result($rsRES,0,'date');
-        $this->description = mysql_result($rsRES,0,'description');
-        $this->file = mysql_result($rsRES,0,'file');
-        $this->status_id = mysql_result($rsRES,0,'status_id');
-        $this->created = mysql_result($rsRES,0,'created');
-        $this->updated = mysql_result($rsRES,0,'updated');
-        $this->record_user_id = mysql_result($rsRES,0,'record_user_id');
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+    if ( mysqli_num_rows($rsRES) > 0 ){
+        $this->id = mysqli_result($rsRES,0,'id');
+        $this->name = mysqli_result($rsRES,0,'name');
+        $this->date = mysqli_result($rsRES,0,'date');
+        $this->description = mysqli_result($rsRES,0,'description');
+        $this->file = mysqli_result($rsRES,0,'file');
+        $this->status_id = mysqli_result($rsRES,0,'status_id');
+        $this->created = mysqli_result($rsRES,0,'created');
+        $this->updated = mysqli_result($rsRES,0,'updated');
+        $this->record_user_id = mysqli_result($rsRES,0,'record_user_id');
         return $this->id;
     }
     else{
@@ -48,17 +48,17 @@ function get_id(){
 }
 function get_detail(){
     $strSQL = "SELECT id,name, date, description,  file,  status_id,  created,  updated,  record_user_id FROM downloads WHERE id = '".$this->id."'";
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-    if ( mysql_num_rows($rsRES) > 0 ){
-        $this->id = mysql_result($rsRES,0,'id');
-        $this->name = mysql_result($rsRES,0,'name');
-        $this->date = mysql_result($rsRES,0,'date');
-        $this->description = mysql_result($rsRES,0,'description');
-        $this->file = mysql_result($rsRES,0,'file');
-        $this->status_id = mysql_result($rsRES,0,'status_id');
-        $this->created = mysql_result($rsRES,0,'created');
-        $this->updated = mysql_result($rsRES,0,'updated');
-        $this->record_user_id = mysql_result($rsRES,0,'record_user_id');
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+    if ( mysqli_num_rows($rsRES) > 0 ){
+        $this->id = mysqli_result($rsRES,0,'id');
+        $this->name = mysqli_result($rsRES,0,'name');
+        $this->date = mysqli_result($rsRES,0,'date');
+        $this->description = mysqli_result($rsRES,0,'description');
+        $this->file = mysqli_result($rsRES,0,'file');
+        $this->status_id = mysqli_result($rsRES,0,'status_id');
+        $this->created = mysqli_result($rsRES,0,'created');
+        $this->updated = mysqli_result($rsRES,0,'updated');
+        $this->record_user_id = mysqli_result($rsRES,0,'record_user_id');
         return $this->id;
     }
     else{
@@ -78,9 +78,9 @@ function update(){
     $strSQL .= addslashes(trim($this->created)) . "','";
     $strSQL .= addslashes(trim($this->updated)) . "','";
     $strSQL .= addslashes(trim($this->record_user_id)) . "')";
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-    if ( mysql_affected_rows($this->connection) > 0 ) {
-        $this->id = mysql_insert_id();
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+    if ( mysqli_affected_rows($this->connection) > 0 ) {
+        $this->id = mysqli_insert_id();
         return $this->id;
     }
     else{
@@ -98,8 +98,8 @@ function update(){
     $strSQL .= " created = '".addslashes(trim($this->created))."',";
     $strSQL .= " updated = '".addslashes(trim($this->updated))."' ";
     $strSQL .= " WHERE id = ".$this->id;
-    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
                     return true;
             }
             else{
@@ -113,9 +113,9 @@ function update(){
 function get_list_array(){
         $downloads = array();$i=0;
         $strSQL = "SELECT id, name, date,  description,  file,  status_id,  created,  updated,  record_user_id FROM downloads ORDER BY name";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-        while ( list ($id, $name, $date, $description,  $file,  $status_id,  $gallery_id,  $created,  $updated,  $record_user_id) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+        while ( list ($id, $name, $date, $description,  $file,  $status_id,  $gallery_id,  $created,  $updated,  $record_user_id) = mysqli_fetch_row($rsRES) ){
               $downloads[$i]["id"] = $id;
               $downloads[$i]["name"] = $name;
               $downloads[$i]["date"] = $date;
@@ -154,19 +154,19 @@ function get_list_array_bylimit($search_string = "",$status_id = gINVALID ,$star
         
         //taking limit  result of that in $rsRES .$start_record is starting record of a page.$max_records num of records in that page
         $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-        $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+        $rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
 
             //without limit  , result of that in $all_rs
             if (trim($this->total_records)!="" && $this->total_records > 0) {
                 
             } else {
-                $all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit); 
-                $this->total_records = mysql_num_rows($all_rs);
+                $all_rs = mysqli_query($this->connection, $strSQL) or die(mysqli_error(). $strSQL_limit); 
+                $this->total_records = mysqli_num_rows($all_rs);
             }
     
-            while ( $row = mysql_fetch_assoc($rsRES) ){
+            while ( $row = mysqli_fetch_assoc($rsRES) ){
                 $limited_data[$i]["id"] = $row["id"];
                 $limited_data[$i]["name"] = $row["name"];
                 $limited_data[$i]["date"] = $row["date"];

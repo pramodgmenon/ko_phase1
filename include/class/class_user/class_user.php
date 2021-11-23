@@ -57,9 +57,9 @@ class User {
 			  $strSQL .= addslashes(trim($this->organization_id))."','";
 			  $strSQL .= "$date','";
 		      $strSQL .= addslashes(trim($this->activation_token))."')";
-			  $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-              if ( mysql_affected_rows($this->connection) > 0 ){
-                    $this->id = mysql_insert_id();
+			  $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+              if ( mysqli_affected_rows($this->connection) > 0 ){
+                    $this->id = mysqli_insert_id();
 		    $this->error_description = "Registration Successfull.Check Your Email For Account Activaton Link.If You Do NOt Recieve Any Email Please Contact Our Server Administrator.Thank You.";
                     return true;
               }
@@ -87,8 +87,8 @@ class User {
             $strSQL .= "occupation = '".addslashes(trim($this->occupation))."',";
             $strSQL .= "address = '".addslashes(trim($this->address))."'";
 	    $strSQL .= " WHERE id = ".$this->id;
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
 		$this->error_description = "Updated data Successfuly";                    
 		return true;
             }
@@ -105,14 +105,14 @@ class User {
     function change_password($newpasswd,$oldpasswd){
                     $strSQL3 = "UPDATE users SET ";
                     $strSQL3 .= "password = NULL";
-                    $strSQL3 .= " WHERE id = '" . $this->id ."' AND password = '".mysql_real_escape_string($oldpasswd)."'";
-		    $rsRES3 = mysql_query($strSQL3,$this->connection) or die(mysql_error(). $strSQL3 );
-		    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $strSQL3 .= " WHERE id = '" . $this->id ."' AND password = '".mysqli_real_escape_string($oldpasswd)."'";
+		    $rsRES3 = mysqli_query($strSQL3,$this->connection) or die(mysqli_error(). $strSQL3 );
+		    if ( mysqli_affected_rows($this->connection) > 0 ) {
 		    $strSQL = "UPDATE users SET ";
-                    $strSQL .= "password = '" .mysql_real_escape_string($newpasswd). "' ";
+                    $strSQL .= "password = '" .mysqli_real_escape_string($newpasswd). "' ";
                     $strSQL .= "WHERE id = '" . $this->id . "'";
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-                    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+                    if ( mysqli_affected_rows($this->connection) > 0 ) {
                         return true;
                     }
                     else{
@@ -124,9 +124,9 @@ class User {
 
     function exist(){
         $strSQL = "SELECT id FROM users WHERE username = '".$this->username."'"; 
-  $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-		$this->id = mysql_result($rsRES,0,'id');
+  $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+		$this->id = mysqli_result($rsRES,0,'id');
             return true;
         }
         else{
@@ -145,19 +145,19 @@ class User {
 		if($strcondition!=''){
 		$strSQL.=$strcondition;
 		}
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->username = mysql_result($rsRES,0,'username');
-                $this->first_name = mysql_result($rsRES,0,'first_name');
-                $this->last_name= mysql_result($rsRES,0,'last_name');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
+                $this->username = mysqli_result($rsRES,0,'username');
+                $this->first_name = mysqli_result($rsRES,0,'first_name');
+                $this->last_name= mysqli_result($rsRES,0,'last_name');
 		
-                $this->user_status_id= mysql_result($rsRES,0,'user_status_id');
-                $this->email = mysql_result($rsRES,0,'email');
-                $this->phone = mysql_result($rsRES,0,'phone');
-                $this->address = mysql_result($rsRES,0,'address');
-                $this->occupation = mysql_result($rsRES,0,'occupation');
-		        $this->registration_date = mysql_result($rsRES,0,'registration_date');
+                $this->user_status_id= mysqli_result($rsRES,0,'user_status_id');
+                $this->email = mysqli_result($rsRES,0,'email');
+                $this->phone = mysqli_result($rsRES,0,'phone');
+                $this->address = mysqli_result($rsRES,0,'address');
+                $this->occupation = mysqli_result($rsRES,0,'occupation');
+		        $this->registration_date = mysqli_result($rsRES,0,'registration_date');
                 
                 return true;
         }
@@ -168,15 +168,15 @@ class User {
 
 function get_detail_by_username(){
         $strSQL = "SELECT * FROM users WHERE username = ".$this->username;
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-		$this->id = mysql_result($rsRES,0,'id');
-                $this->first_name = mysql_result($rsRES,0,'first_name');
-                $this->last_name= mysql_result($rsRES,0,'last_name');
-                $this->email = mysql_result($rsRES,0,'email');
-                $this->phone = mysql_result($rsRES,0,'phone');
-                $this->address = mysql_result($rsRES,0,'address');
-                $this->occupation = mysql_result($rsRES,0,'occupation');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+		$this->id = mysqli_result($rsRES,0,'id');
+                $this->first_name = mysqli_result($rsRES,0,'first_name');
+                $this->last_name= mysqli_result($rsRES,0,'last_name');
+                $this->email = mysqli_result($rsRES,0,'email');
+                $this->phone = mysqli_result($rsRES,0,'phone');
+                $this->address = mysqli_result($rsRES,0,'address');
+                $this->occupation = mysqli_result($rsRES,0,'occupation');
 		
                 return true;
         }
@@ -191,9 +191,9 @@ function get_detail_by_username(){
 function get_array(){
         $users = array();
         $strSQL = "SELECT id,username FROM users ORDER BY username";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-        while ( list ($id,$username) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+        while ( list ($id,$username) = mysqli_fetch_row($rsRES) ){
           $users[$id]["name"] = $username;
         }
         return $users;
@@ -210,9 +210,9 @@ function get_array(){
 function get_array_username(){
         $users = array();
         $strSQL = "SELECT id,username FROM users ORDER BY username";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-        while ( list ($id,$username) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+        while ( list ($id,$username) = mysqli_fetch_row($rsRES) ){
           $users[$id] = $username;
         }
         return $users;
@@ -238,9 +238,9 @@ function get_users(){
             $strSQL = $strSQL." WHERE".$strSQL_where;
         }
         $strSQL .= " ORDER BY id DESC";//echo $strSQL;exit();
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( $row = mysql_fetch_assoc($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( $row = mysqli_fetch_assoc($rsRES) ){
                 $users[$i]["id"] = $row["id"];
                 $users[$i]["username"] = $row["username"];
                 $i++;
@@ -258,9 +258,9 @@ function get_users(){
         $user_status = array();
 		
         $strSQL = "SELECT id,name FROM user_statuses ORDER BY name";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( list($id,$name) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( list($id,$name) = mysqli_fetch_row($rsRES) ){
 				 $user_status[$id] = $name;
                
             }
@@ -276,9 +276,9 @@ function get_users(){
 function get_list_array(){
         $user_status = array();$i=0;
         $strSQL = "SELECT id,name FROM user_statuses ORDER BY name";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-        while ( list ($id,$name) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+        while ( list ($id,$name) = mysqli_fetch_row($rsRES) ){
               $user_status[$i]["id"] = $id;
               $user_status[$i]["name"] = $name;
               $i++;
@@ -356,21 +356,21 @@ function get_list_array(){
 	}
 
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+		$rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
 
             //without limit  , result of that in $all_rs
             if (trim($this->total_records)!="" && $this->total_records > 0) {
             } else {
 				
-                $all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit); 
-                $this->total_records = mysql_num_rows($all_rs);
+                $all_rs = mysqli_query($this->connection, $strSQL) or die(mysqli_error(). $strSQL_limit); 
+                $this->total_records = mysqli_num_rows($all_rs);
             }
 
 
 
-		    while ( list ($id,$username,$firstname,$lastname,$user_status_id,$registration_date,$email,$phone) = mysql_fetch_row($rsRES) ){
+		    while ( list ($id,$username,$firstname,$lastname,$user_status_id,$registration_date,$email,$phone) = mysqli_fetch_row($rsRES) ){
 		          $limited_data[$i]["id"] = $id;
 		          $limited_data[$i]["username"] = $username;
 		          $limited_data[$i]["first_name"] = $firstname;
@@ -396,8 +396,8 @@ function get_list_array(){
 function delete(){
     if($this->id > 0 ) {
         $strSQL = " DELETE FROM users WHERE id = '".$this->id."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_affected_rows($this->connection) > 0 ) {
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_affected_rows($this->connection) > 0 ) {
             return true;
         }
         else{
@@ -412,13 +412,13 @@ function delete(){
 
 function check_email(){
 	$strSQL = "SELECT id FROM users WHERE username = '".$this->username."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
 		$password_token=md5(time());
 		$strSQL = "UPDATE users SET ";
                     $strSQL .= "password_token = '$password_token'";
                     $strSQL .= "WHERE username = '" . $this->username. "'";
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
 		    return $password_token;
         }
         else{
@@ -431,25 +431,25 @@ function check_email(){
 
 function reset_password($newpasswd,$password_token){
 		    $strSQL1 = "SELECT id FROM users WHERE password_token ='".$password_token."'";
-		    $rsRES1 = mysql_query($strSQL1,$this->connection) or die(mysql_error(). $strSQL1 );
-		    if ( mysql_num_rows($rsRES1) > 0 ){
-                    $this->id = mysql_result($rsRES1,0,'id');
+		    $rsRES1 = mysqli_query($strSQL1,$this->connection) or die(mysqli_error(). $strSQL1 );
+		    if ( mysqli_num_rows($rsRES1) > 0 ){
+                    $this->id = mysqli_result($rsRES1,0,'id');
                     $strSQL3 = "UPDATE users SET ";
                     $strSQL3 .= "password = NULL";
                     $strSQL3 .= " WHERE id = '" . $this->id ."'";
-		    $rsRES3 = mysql_query($strSQL3,$this->connection) or die(mysql_error(). $strSQL3 );
-		    if ( mysql_affected_rows($this->connection) > 0 ) {
+		    $rsRES3 = mysqli_query($strSQL3,$this->connection) or die(mysqli_error(). $strSQL3 );
+		    if ( mysqli_affected_rows($this->connection) > 0 ) {
 		    $strSQL = "UPDATE users SET ";
-                    $strSQL .= "password = '" .mysql_real_escape_string($newpasswd). "',";
+                    $strSQL .= "password = '" .mysqli_real_escape_string($newpasswd). "',";
 					$strSQL .=  "user_status_id = '".USERSTATUS_ACTIVE."'";
                     $strSQL .= " WHERE password_token = '" . $password_token . "'";
 					
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-                    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+                    if ( mysqli_affected_rows($this->connection) > 0 ) {
 		    $strSQL2 = "UPDATE users SET ";
                     $strSQL2 .= "password_token = 'NULL' ";
                     $strSQL2 .= "WHERE id = '" . $this->id . "'";
-                    $rsRES2 = mysql_query($strSQL2,$this->connection) or die(mysql_error(). $strSQL2 );
+                    $rsRES2 = mysqli_query($strSQL2,$this->connection) or die(mysqli_error(). $strSQL2 );
                     return true;
 
                     }
@@ -476,19 +476,19 @@ function reset_password($newpasswd,$password_token){
 
 function activate_account($activation_token){
 		    $strSQL1 = "SELECT id,phone FROM users WHERE activation_token ='".$activation_token."'";
-		    $rsRES1 = mysql_query($strSQL1,$this->connection) or die(mysql_error(). $strSQL1 );
-		    if ( mysql_num_rows($rsRES1) > 0 ){
-                    $this->id = mysql_result($rsRES1,0,'id');
-		    $this->phone = mysql_result($rsRES1,0,'phone');
+		    $rsRES1 = mysqli_query($strSQL1,$this->connection) or die(mysqli_error(). $strSQL1 );
+		    if ( mysqli_num_rows($rsRES1) > 0 ){
+                    $this->id = mysqli_result($rsRES1,0,'id');
+		    $this->phone = mysqli_result($rsRES1,0,'phone');
                     $strSQL = "UPDATE users SET ";
                     $strSQL .= "user_status_id =". USERSTATUS_ACTIVE ;
                     $strSQL .= " WHERE activation_token = '" .$activation_token. "'";
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-                    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+                    if ( mysqli_affected_rows($this->connection) > 0 ) {
 		    $strSQL2 = "UPDATE users SET ";
                     $strSQL2 .= "activation_token = 'NULL' ";
                     $strSQL2 .= "WHERE id = '" . $this->id . "'";
-                    $rsRES2 = mysql_query($strSQL2,$this->connection) or die(mysql_error(). $strSQL2 );
+                    $rsRES2 = mysqli_query($strSQL2,$this->connection) or die(mysqli_error(). $strSQL2 );
                     return true;
 
                     }
@@ -510,13 +510,13 @@ function change_user_password(){
                     $strSQL3 = "UPDATE users SET ";
                     $strSQL3 .= "password = NULL";
                     $strSQL3 .= " WHERE id = '" . $this->id ."'";
-		    $rsRES3 = mysql_query($strSQL3,$this->connection) or die(mysql_error(). $strSQL3 );
-		    if ( mysql_affected_rows($this->connection) > 0 ) {
+		    $rsRES3 = mysqli_query($strSQL3,$this->connection) or die(mysqli_error(). $strSQL3 );
+		    if ( mysqli_affected_rows($this->connection) > 0 ) {
 		    $strSQL = "UPDATE users SET ";
-                    $strSQL .= "password = '" .mysql_real_escape_string($this->password). "'";
+                    $strSQL .= "password = '" .mysqli_real_escape_string($this->password). "'";
                     $strSQL .= " WHERE id = '" . $this->id ."'";
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-                    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+                    if ( mysqli_affected_rows($this->connection) > 0 ) {
                         return true;
                     }
                     else{
@@ -535,9 +535,9 @@ function insert_mobile_registration(){
               $strSQL .= "VALUES ('".addslashes(trim($this->username))."','".md5(addslashes(trim($this->password)))."','','','','','','','".USERSTATUS_ACTIVE."','','$date')";
               
 		
-              $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-              if ( mysql_affected_rows($this->connection) > 0 ){
-                    $this->id = mysql_insert_id();
+              $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+              if ( mysqli_affected_rows($this->connection) > 0 ){
+                    $this->id = mysqli_insert_id();
 		    $this->error_description = "Registration Successfull.Check Your Mobile For User Name And Passwword,If You Do NOt Recieve Any sms Please Contact Our Server Administrator.Thank You.";
                     return true;
               }
@@ -553,9 +553,9 @@ function import_user_csv(){
 $date=date("Y/m/d H.i:s<br>", time());
  
            $strSQL = "INSERT INTO users (username, password,first_name, last_name,email,phone,address, occupation, user_status_id,organization_id,registration_date) VALUES('".$this->username."','".md5($this->password)."','','','','','','','".USERSTATUS_ACTIVE."','".$this->organization_id."','$date')"; 
-$rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_affected_rows($this->connection) > 0 ) {
-		$this->id = mysql_insert_id();
+$rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_affected_rows($this->connection) > 0 ) {
+		$this->id = mysqli_insert_id();
                return true;
           }else{
               $this->error_number = 3;
@@ -568,11 +568,11 @@ $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
     function get_list_array_filter($filter = "")
     {
         $strSQL = "SELECT * FROM users WHERE ".$filter;
-        $rsRES  = mysql_query($strSQL,$this->connection) or die(mysql_error().$strSQL);
-        if(mysql_num_rows($rsRES) > 0)
+        $rsRES  = mysqli_query($strSQL,$this->connection) or die(mysqli_error().$strSQL);
+        if(mysqli_num_rows($rsRES) > 0)
         {
             $limited_data= array();$i=0;
-            while ( $row = mysql_fetch_assoc($rsRES) )
+            while ( $row = mysqli_fetch_assoc($rsRES) )
             {
                 $limited_data[$i]["id"] = $row['id'];
                 $limited_data[$i]["username"] = $row['username'];

@@ -29,9 +29,9 @@ class User_testimonials {
               $strSQL .= addslashes(trim($this->status_id))."','";
               $strSQL .= addslashes(trim($this->testimonial))."','";
               $strSQL .= $date."')";
-		      $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-              if ( mysql_affected_rows($this->connection) > 0 ){
-                    $this->id = mysql_insert_id();
+		      $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+              if ( mysqli_affected_rows($this->connection) > 0 ){
+                    $this->id = mysqli_insert_id();
 		    return true;
               }
               else{
@@ -49,8 +49,8 @@ class User_testimonials {
             $strSQL .= ",testimonial = '".addslashes(trim($this->testimonial))."'";
 		}	
 	    $strSQL .= " WHERE id = ".$this->id;
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
 		$this->error_description = "Updated data Successfuly";                    
 		return true;
             }
@@ -68,13 +68,13 @@ class User_testimonials {
 
     function get_detail(){
         $strSQL = "SELECT * FROM user_testimonials WHERE id = ".$this->id;
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->user_id = mysql_result($rsRES,0,'user_id');
-                $this->status_id = mysql_result($rsRES,0,'status_id');
-                $this->testimonial= mysql_result($rsRES,0,'testimonial');
-		$this->tdate = mysql_result($rsRES,0,'date');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
+                $this->user_id = mysqli_result($rsRES,0,'user_id');
+                $this->status_id = mysqli_result($rsRES,0,'status_id');
+                $this->testimonial= mysqli_result($rsRES,0,'testimonial');
+		$this->tdate = mysqli_result($rsRES,0,'date');
                 
                 return true;
         }
@@ -123,21 +123,21 @@ class User_testimonials {
          $strSQL .= " ORDER BY id DESC";
 	}
 	$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+		$rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
 
             //without limit  , result of that in $all_rs
             if (trim($this->total_records)!="" && $this->total_records > 0) {
             } else {
 				
-                $all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit); 
-                $this->total_records = mysql_num_rows($all_rs);
+                $all_rs = mysqli_query($this->connection, $strSQL) or die(mysqli_error(). $strSQL_limit); 
+                $this->total_records = mysqli_num_rows($all_rs);
             }
 
 
 
-		    while ( list ($id,$user_id,$status_id,$testimonial,$date) = mysql_fetch_row($rsRES) ){
+		    while ( list ($id,$user_id,$status_id,$testimonial,$date) = mysqli_fetch_row($rsRES) ){
 		          $limited_data[$i]["id"] = $id;
 		          $limited_data[$i]["user_id"] = $user_id;
 		          $limited_data[$i]["status_id"] = $status_id;
@@ -160,8 +160,8 @@ class User_testimonials {
 function delete(){
     if($this->id > 0 ) {
         $strSQL = " DELETE FROM user_testimonials WHERE id = '".$this->id."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_affected_rows($this->connection) > 0 ) {
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_affected_rows($this->connection) > 0 ) {
             return true;
         }
         else{
@@ -176,9 +176,9 @@ function get_array_statuses(){
         $statuses = array();
 		
         $strSQL = "SELECT id,name FROM statuses ORDER BY name";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( list($id,$name) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( list($id,$name) = mysqli_fetch_row($rsRES) ){
 				 $statuses[$id] = $name;
                
             }

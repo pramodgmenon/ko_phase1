@@ -9,22 +9,22 @@
 
     ?>
         <!-- form start-->
-            <form  target="_self" method="post" action="<?= $current_url?>" name="frmlanguage" id="frmlanguage">
+            <form  target="_self" method="post" action="<?php $current_url; ?>" name="frmlanguage" id="frmlanguage">
                 <table cellspacing="5" border="0" cellpadding="0" align="center">
                 <tbody>
                 <tr>
                     <td colspan="2" align="center" class="page_caption">
-                     <br /><?= $CAP_page_caption;?><br /><br />
+                     <br /><?php echo $CAP_page_caption;?><br /><br />
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2" class="errormessage_passwd" align="center" >
-                       <? echo $mylanguage->error_description; ?>
+                       <?php echo $mylanguage->error_description; ?>
                     </td>
                 </tr>
                 <tr>
                     <td valign="bottom" align="right">
-                        <b><?= $CAP_language ?></b></td>
+                        <b><?php echo $CAP_language; ?></b></td>
                     </td>
                     <td valign="top" align="left">
                     <?populate_list_array("lstlanguage", $chk, "id", "language", $defaultvalue=-1,$disable=false)?>
@@ -36,7 +36,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center" width="100%">
-                             <input value="<?= $CAP_import ?>" type="submit" name="submit" onClick="return validate_language();" />
+                             <input value="<?php echo $CAP_import; ?>" type="submit" name="submit" onClick="return validate_language();" />
                     </td>
                 </tr>
                 </tbody>

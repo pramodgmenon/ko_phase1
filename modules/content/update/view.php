@@ -32,10 +32,10 @@
 		
 	<tr>
 	<td>&nbsp;</td>
-	<td><strong>[</strong> <input <?php if ($intpublish == CONF_PUBLISH ){ ?> checked="true" <?php } ?> type="checkbox" name="chk_publish" value="<?= CONF_PUBLISH ?>" > <?= $conf_publish ?> <strong>]</strong>&nbsp;&nbsp;&nbsp;<input name="update" value="<?= $conf_submit_update ?>" type="submit"> &nbsp;&nbsp;
-<input name="delete" onClick="return delete_conf();" value="<?= $conf_submit_delete ?>" type="submit"> 
+	<td><strong>[</strong> <input <?php if ($intpublish == CONF_PUBLISH ){ ?> checked="true" <?php } ?> type="checkbox" name="chk_publish" value="<?php echo CONF_PUBLISH; ?>" > <?php echo $conf_publish; ?> <strong>]</strong>&nbsp;&nbsp;&nbsp;<input name="update" value="<?php echo $conf_submit_update; ?>" type="submit"> &nbsp;&nbsp;
+<input name="delete" onClick="return delete_conf();" value="<?php echo $conf_submit_delete; ?>" type="submit"> 
 	<input type="hidden" name="h_contentinfo" value="<?php echo md5("CONF_INFO"); ?>">
-	<input type="hidden" name="h_contentid" value="<?= $int_contnent_id ?>" >
+	<input type="hidden" name="h_contentid" value="<?php echo $int_contnent_id; ?>" >
 	
 	</td>
 	</tr>

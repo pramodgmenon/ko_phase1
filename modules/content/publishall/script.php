@@ -17,7 +17,7 @@
         error = "";
         frm = document.getElementById("frmpublishall");
         if(Trim(frm.lstlanguage.value) == -1){
-           error += "<?= $MSG_empty_language ?>\n";
+           error += "<?php echo $MSG_empty_language; ?>\n";
         }
         if ( error != "" ){
             alert(error);

@@ -4,8 +4,8 @@ $dbusername = "MYSQL USER";
 $dbpassword = "MYSQL PASSWORD";
 $dbname = "DB_NAME";
 //establish the connection with the database server
-$myconnection = mysql_connect($dbhostname, $dbusername, $dbpassword) or die ("Unable to connect to server" . mysql_error());
+$myconnection = mysqli_connect($dbhostname, $dbusername, $dbpassword) or die ("Unable to connect to server" . mysqli_error());
 //connect to the database
-$blnConnected = mysql_select_db ($dbname, $myconnection) or die("Unable to connect to database" . mysql_error());
+$blnConnected = mysqli_select_db ($dbname, $myconnection) or die("Unable to connect to database" . mysqli_error());
 ?>
 

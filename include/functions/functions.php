@@ -2,7 +2,7 @@
 
 	function populatelist ($lstname, $str_query, $str_firstvalue="-1", $str_firstoption = "", $str_selected = "", $bln_disabled = false, $str_event = "", $str_style = "") {
 		// Function to fetch using sql and populate values in a dropdown list
-		$rsRES = mysql_query($str_query) or die (mysql_error() . $str_query);
+		$rsRES = mysqli_query($str_query) or die (mysqli_error() . $str_query);
 		$str_disable = "";
 		if ($bln_disabled == true){
 		    $str_disable = "disabled";
@@ -18,7 +18,7 @@
 		        echo '<option value="' . $str_firstvalue . '">' . $str_firstoption . '</option>';
 		    }
 		}
-		while ($arrRES = mysql_fetch_array($rsRES)) {
+		while ($arrRES = mysqli_fetch_array($rsRES)) {
 		    if ( $str_selected == $arrRES[0] ) {
 		        echo '<option selected="selected" value="' . $arrRES[0] . '">';
 		        echo $arrRES[1];
@@ -80,11 +80,11 @@
 function generate_language_links(){
 	GLOBAL $myconnection;
 	$query = "SELECT id, name FROM languages WHERE publish='".CONTENT_PUBLISH."' ORDER BY id" ;
-	$rsRES = mysql_query($query) or die (mysql_error() . $query);
-	if(mysql_num_rows($rsRES)==0){
+	$rsRES = mysqli_query($myconnection, $query) or die (mysqli_error() . $query);
+	if(mysqli_num_rows($rsRES)==0){
 		// $this->debug_output.="From Function generate_language_links :: No language is Published. <br/>";
 	}else{
-		while ($arrRES = mysql_fetch_array($rsRES)) {
+		while ($arrRES = mysqli_fetch_array($rsRES)) {
 			if($arrRES['id']== $_SESSION[SESSION_TITLE.'gLANGUAGE']){
 			echo '&nbsp;'.$arrRES['name'].'&nbsp;';
 		}else{

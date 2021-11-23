@@ -20,11 +20,11 @@ class Language {
 function get_id(){
     $strSQL = "SELECT id AS id,name,publish ";
     $strSQL .= "FROM languages  WHERE name = '".$this->language."'";
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-    if ( mysql_num_rows($rsRES) > 0 ){
-        $this->id = mysql_result($rsRES,0,'id');
-        $this->language = mysql_result($rsRES,0,'name');
-        $this->publish = mysql_result($rsRES,0,'publish');
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+    if ( mysqli_num_rows($rsRES) > 0 ){
+        $this->id = mysqli_result($rsRES,0,'id');
+        $this->language = mysqli_result($rsRES,0,'name');
+        $this->publish = mysqli_result($rsRES,0,'publish');
         if ( $this->publish == CONTENT_NOT_PUBLISH ) $this->publish_status = "No";
         else $this->publish_status = "Yes";
         return $this->id;
@@ -38,11 +38,11 @@ function get_id(){
 function get_detail(){
     $strSQL = "SELECT id AS id,name,publish ";
     $strSQL .= "FROM languages  WHERE id = '".$this->id."'";
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-    if ( mysql_num_rows($rsRES) > 0 ){
-        $this->id = mysql_result($rsRES,0,'id');
-        $this->language = mysql_result($rsRES,0,'name');
-        $this->publish = mysql_result($rsRES,0,'publish');
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+    if ( mysqli_num_rows($rsRES) > 0 ){
+        $this->id = mysqli_result($rsRES,0,'id');
+        $this->language = mysqli_result($rsRES,0,'name');
+        $this->publish = mysqli_result($rsRES,0,'publish');
         if ( $this->publish == 0 ) $this->publish_status = "No";
         else $this->publish_status = "Yes";
 
@@ -66,9 +66,9 @@ function update(){
     $strSQL .= addslashes(trim($this->language)) ."','";
     $strSQL .= addslashes(trim($this->publish)) . "')";
 	
-    $rsRES = mysql_query($strSQL,$this->connection) or die ( mysql_error() . $strSQL );
-          if ( mysql_affected_rows($this->connection) > 0 ) {
-              $this->id = mysql_insert_id();
+    $rsRES = mysqli_query($strSQL,$this->connection) or die ( mysqli_error() . $strSQL );
+          if ( mysqli_affected_rows($this->connection) > 0 ) {
+              $this->id = mysqli_insert_id();
               return $this->id;
           }else{
               $this->error_number = 3;
@@ -79,8 +79,8 @@ function update(){
     $strSQL = "UPDATE languages SET name = '".addslashes(trim($this->language))."',";
     $strSQL .= "publish = ".addslashes(trim($this->publish))."";
     $strSQL .= " WHERE id = ".$this->id;
-    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
                     return true;
             }
             else{
@@ -92,8 +92,8 @@ function update(){
 }
 function delete(){
         $strSQL = "DELETE FROM languages WHERE id =".$this->id;
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) > 0 ) {
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) > 0 ) {
                     return true;
             }
             else{
@@ -105,9 +105,9 @@ function get_list_array(){
         $cities = array();$i=0;
 
         $strSQL = "SELECT id,name,publish FROM languages";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( list ($id,$name,$publish) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( list ($id,$name,$publish) = mysqli_fetch_row($rsRES) ){
                 $languages[$i]["id"] =  $id;
                 $languages[$i]["name"] = $name;
                 $languages[$i]["publish"] = $publish;
@@ -151,19 +151,19 @@ function get_list_array_bylimit($language="",$publish=-1,$start_record = 0,$max_
         $strSQL .= "ORDER BY name";
         //taking limit  result of that in $rsRES .$start_record is starting record of a page.$max_records num of records in that page
         $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-        $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+        $rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
 
             //without limit  , result of that in $all_rs
             if (trim($this->total_records)!="" && $this->total_records > 0) {
                 
             } else {
-                $all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit); 
-                $this->total_records = mysql_num_rows($all_rs);
+                $all_rs = mysqli_query($this->connection, $strSQL) or die(mysqli_error(). $strSQL_limit); 
+                $this->total_records = mysqli_num_rows($all_rs);
             }
     
-            while ( $row = mysql_fetch_assoc($rsRES) ){
+            while ( $row = mysqli_fetch_assoc($rsRES) ){
                 $limited_data[$i]["id"] = $row["id"];
                 $limited_data[$i]["language"] = $row["name"];
                 $limited_data[$i]["publish"] = $row["publish"];
@@ -185,9 +185,9 @@ function get_array()
         $languages = array();
 		
         $strSQL = "SELECT  id,name FROM languages";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( list($id,$name) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( list($id,$name) = mysqli_fetch_row($rsRES) ){
 				$languages[$id] = $id;
                	$languages[$id] = $name;
             }
@@ -204,9 +204,9 @@ function get_array_lang()
         $languages = array();
 		
         $strSQL = "SELECT  id,name FROM languages";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-            while ( list($id,$name) = mysql_fetch_row($rsRES) ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+            while ( list($id,$name) = mysqli_fetch_row($rsRES) ){
 				$languages[$id] = $name;
                
             }

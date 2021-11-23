@@ -15,40 +15,40 @@ if ( !defined('CHECK_INCLUDED') ){
     </tr>
 
      <tr>
-      <td><?= $CAP_language ?></td>
+      <td><?php echo $CAP_language; ?></td>
       <td><?php loadlanguage_admin("lstlanguage", -1, "Select Language",$language_id,false,'style="width:210px; height:22;"'); ?></td>
     </tr> 
      <tr>
-      <td><?= $CAP_contenttype ?></td>
+      <td><?php echo $CAP_contenttype; ?></td>
       <td><?php loadcontenttypes("lstcontenttype", -1, "Select content Type",$contenttype_id,false,'style="width:210px; height:22;"'); ?></td>
     </tr> 
 
      <tr>
-      <td><?= $CAP_pagename ?></td>
+      <td><?php echo $CAP_pagename; ?></td>
       <td><input  style="width: 210px; height:22;"  maxlength="100" size="35"
  name="txtpagename" value="<?php echo $pagename; ?>"></td>
     </tr> 
      
 
     <tr>
-      <td><?=  $CAP_confname; ?></td>
+      <td><?php echo $CAP_confname; ?></td>
       <td><input  style="width: 210px; height:22;"  maxlength="100" size="35"
  name="txtcontentname" value="<?php echo $contentname; ?>"></td>
     </tr>    
     
      <tr>
-      <td><?=  $CAP_content; ?></td>
+      <td><?php echo $CAP_content; ?></td>
       <td><input  style="width: 210px; height:22;"  maxlength="100" size="35"
  name="txtcontent" value="<?php echo $content; ?>"></td>
     </tr>    
      <tr>
-      <td><?=  $CAP_description; ?></td>
+      <td><?php echo $CAP_description; ?></td>
       <td><input  style="width: 210px; height:22;"  maxlength="100" size="35"
  name="txtdescription" value="<?php echo $description; ?>"></td>
     </tr>    
     
      <tr>
-      <td><?=  $CAP_publish; ?></td>
+      <td><?php echo $CAP_publish; ?></td>
       <td><input type="checkbox"  name="chk_publish" value="1" <?php if($publish == 1) { ?> checked="true" <?php } ?> ></td>
     </tr>  
  
@@ -58,7 +58,7 @@ if ( !defined('CHECK_INCLUDED') ){
     </tr>
     <tr>
       <td>&nbsp;&nbsp;</td>
-      <td><input name="submit" value="<?= $CAP_submit_search ?>" type="submit"><input type="hidden" name="h_CAP_search" value="<?php echo md5("CONTENT_SEARCH"); ?>"></td>
+      <td><input name="submit" value="<?php echo $CAP_submit_search; ?>" type="submit"><input type="hidden" name="h_CAP_search" value="<?php echo md5("CONTENT_SEARCH"); ?>"></td>
     </tr>
 
 </table>
@@ -68,7 +68,7 @@ if ( !defined('CHECK_INCLUDED') ){
    <?php
     if ( $data_bylimit == false ){?>
      <tr><td colspan="6">&nbsp;</td></tr>
-     <tr><td colspan="6" align="center" class="message" ><?= $mesg ?></td></tr>
+     <tr><td colspan="6" align="center" class="message" ><?php echo $mesg; ?></td></tr>
      <tr><td colspan="6">&nbsp;</td></tr>
     <?
      }
@@ -103,7 +103,7 @@ if ( !defined('CHECK_INCLUDED') ){
 
         ?>
     <tr onmouseover="this.className='row_highlight'" onmouseout="this.className='<?php echo $style; ?>'"  class="<?php echo $style; ?>" >
-        <td><?= $slno++ ?></td>
+        <td><?php echo $slno++; ?></td>
         <td><?php echo $data_bylimit[$index]["language_name"]; ?></td>
         <td><?php echo $data_bylimit[$index]["contenttype_name"]; ?></td>
         <td><a target="_blank" href="<?php echo $link; ?>"><?php echo $data_bylimit[$index]["name"]; ?></a></td>

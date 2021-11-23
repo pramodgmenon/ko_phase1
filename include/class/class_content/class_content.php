@@ -57,11 +57,11 @@ class Content {
 
 
 		$strSQL = "SELECT C.id, C.content, C.publish FROM contents C, pages P WHERE P.id= C.page_id AND P.name='".addslashes($page_name)."' AND C.language_id='".$language_id."'  AND C.contenttype_id='".$contenttype_id."' AND C.name='".addslashes($name)."' ";
-		$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-		$count_content= mysql_num_rows($result);
+		$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+		$count_content= mysqli_num_rows($result);
 
 		if ($count_content > 0) {
-			$row_content = mysql_fetch_assoc($result);
+			$row_content = mysqli_fetch_assoc($result);
 			if($row_content['publish'] == CONTENT_NOT_PUBLISH) {
 				$content = "Not Published";
 			}else{
@@ -110,11 +110,11 @@ class Content {
 
 
 		$strSQL = "SELECT C.id, C.content, C.publish FROM contents C, pages P WHERE P.id= C.page_id AND P.name='".addslashes($page_name)."' AND C.language_id='".$language_id."'  AND C.contenttype_id='".$contenttype_id."' AND C.name='".addslashes($name)."' ";
-		$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-		$count_content= mysql_num_rows($result);
+		$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+		$count_content= mysqli_num_rows($result);
 
 		if ($count_content > 0) {
-			$row_content = mysql_fetch_assoc($result);
+			$row_content = mysqli_fetch_assoc($result);
 			if($row_content['publish'] == CONTENT_NOT_PUBLISH) {
 				$content = stripslashes($content);
 			}else{
@@ -125,20 +125,20 @@ class Content {
 		} else {
 
 			$strSQL = "SELECT P.id FROM pages P WHERE  P.name='".addslashes(nl2br($page_name))."' ";
-			$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-			$count_page= mysql_num_rows($result);
+			$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+			$count_page= mysqli_num_rows($result);
 			if ($count_page > 0) {
-				$page_id = mysql_result($result,0,'id');
+				$page_id = mysqli_result($result,0,'id');
 			}else{
 				$strSQL = "INSERT INTO pages (name) VALUES ('".addslashes(nl2br($page_name))."')";
-				$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-				$page_id = mysql_insert_id();
+				$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+				$page_id = mysqli_insert_id();
 			}
 
 			$strSQL = "INSERT INTO `contents` (  `name` , `page_id` , `content` , `description` , `language_id` , `contenttype_id`, `publish` )  VALUES ('".addslashes($name)."', '".$page_id."', '".addslashes($content)."', '".addslashes($description)."', '".$language_id."', '".$contenttype_id."', '" .$publish . "' )";
-			$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
+			$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
 			$content = stripslashes($content); 
-			$content_id = mysql_insert_id();
+			$content_id = mysqli_insert_id();
 		}
 
 	if (defined('gEDIT_MODE') ){
@@ -216,19 +216,19 @@ class Content {
 
         //taking limit  result of that in $rsRES .$start_record is starting record of a page.$max_records num of records in that page
         $strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-        $rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+        $rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
 
 			//without limit  , result of that in $all_rs
 			if (trim($this->total_records)!="" && $this->total_records > 0) {
 				
 			} else {
-				$all_rs = mysql_query($strSQL, $this->connection) or die(mysql_error(). $strSQL_limit); 
-				$this->total_records = mysql_num_rows($all_rs);
+				$all_rs = mysqli_query($this->connection, $strSQL) or die(mysqli_error(). $strSQL_limit); 
+				$this->total_records = mysqli_num_rows($all_rs);
 			}
 	
-			while ( $row = mysql_fetch_assoc($rsRES) ){
+			while ( $row = mysqli_fetch_assoc($rsRES) ){
 				$limited_data[$i]["id"] = $row["id"];
 				$limited_data[$i]["language_id"] = $row["language_id"];
 				$limited_data[$i]["language_name"] = $row["language_name"];
@@ -258,22 +258,22 @@ class Content {
         if ( $this->id == "" || $this->id == gINVALID) {
 
 			$strSQL = "SELECT P.id FROM pages P WHERE  P.name='".addslashes($this->page_name)."' ";
-			$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-			$count_page= mysql_num_rows($result);
+			$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+			$count_page= mysqli_num_rows($result);
 			if ($count_page > 0) {
-				$this->page_id = mysql_result($result,0,'id');
+				$this->page_id = mysqli_result($result,0,'id');
 			}else{
 				$strSQL = "INSERT INTO pages (name) VALUES ('".addslashes($this->page_name)."')";
-				$result = mysql_query($strSQL, $this->connection) or die (mysql_error() . $strSQL);
-				$this->page_id = mysql_insert_id();
+				$result = mysqli_query($this->connection, $strSQL) or die (mysqli_error() . $strSQL);
+				$this->page_id = mysqli_insert_id();
 			}
 
 
 			$strSQL = "INSERT INTO `contents` (  `name` , `page_id` , `content` , `description` , `language_id` , `contenttype_id` )  VALUES ('".addslashes($this->name)."', '".$this->page_id."', '".addslashes($this->content)."', '".addslashes($this->description)."', '".$this->language_id."', '".$this->contenttype_id."' )";
 
-              $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-              if ( mysql_affected_rows($this->connection) > 0 ){
-                    $this->id = mysql_insert_id();;
+              $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+              if ( mysqli_affected_rows($this->connection) > 0 ){
+                    $this->id = mysqli_insert_id();;
                     return true;
               }
               else{
@@ -289,8 +289,8 @@ class Content {
 
             $strSQL .= " WHERE id = ".$this->id;
 
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
                 return true;
             }
             else{
@@ -306,8 +306,8 @@ class Content {
     function delete(){
 
         $strSQL = "DELETE FROM `contents` WHERE id =".$this->id;
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) > 0 ) {
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) > 0 ) {
                     return true;
             }
             else{
@@ -324,26 +324,26 @@ class Content {
 
         $strSQL = "SELECT C.*, P.name as page_name, L.name as language_name, CT.name as contenttype_name FROM contents C, pages P, languages L, contenttypes CT WHERE P.id= C.page_id AND L.id=C.language_id AND CT.id=C.contenttype_id AND C.id = ".$this->id;
 
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
 
-                $this->name = mysql_result($rsRES,0,'name');
+                $this->name = mysqli_result($rsRES,0,'name');
 
-                $this->page_id = mysql_result($rsRES,0,'page_id');
-                $this->page_name = mysql_result($rsRES,0,'page_name');
+                $this->page_id = mysqli_result($rsRES,0,'page_id');
+                $this->page_name = mysqli_result($rsRES,0,'page_name');
 
-                $this->language_id = mysql_result($rsRES,0,'language_id');
-                $this->language_name = mysql_result($rsRES,0,'language_name');
+                $this->language_id = mysqli_result($rsRES,0,'language_id');
+                $this->language_name = mysqli_result($rsRES,0,'language_name');
 
-                $this->contenttype_id = mysql_result($rsRES,0,'contenttype_id');
-                $this->contenttype_name = mysql_result($rsRES,0,'contenttype_name');
+                $this->contenttype_id = mysqli_result($rsRES,0,'contenttype_id');
+                $this->contenttype_name = mysqli_result($rsRES,0,'contenttype_name');
 
 
-                $this->content = mysql_result($rsRES,0,'content');
-                $this->description = mysql_result($rsRES,0,'description');
+                $this->content = mysqli_result($rsRES,0,'content');
+                $this->description = mysqli_result($rsRES,0,'description');
 
-                $this->publish = mysql_result($rsRES,0,'publish');
+                $this->publish = mysqli_result($rsRES,0,'publish');
                if($this->publish==CONTENT_PUBLISH){
 						$this->publish_status = "Yes";	
 					}else{
@@ -361,7 +361,7 @@ function publish_all($language_id){
             $strSQL = "UPDATE `contents` SET ";
             $strSQL .= "publish = '".CONTENT_PUBLISH."' ";
             $strSQL .= " WHERE language_id = '".$language_id."'";
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
                 return true;
             
 }
@@ -369,7 +369,7 @@ function unpublish_all($language_id){
             $strSQL = "UPDATE `contents` SET ";
             $strSQL .= "publish = '".CONTENT_NOT_PUBLISH."' ";
             $strSQL .= " WHERE language_id = '".$language_id."'";
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
                 return true;
             
 }

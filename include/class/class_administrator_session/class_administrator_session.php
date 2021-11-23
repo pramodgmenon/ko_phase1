@@ -32,15 +32,15 @@ class AdministratorSession {
     }
 
     function login(){
-          $strSQL = "SELECT * FROM administrators WHERE username = '".mysql_real_escape_string($this->username);
+          $strSQL = "SELECT * FROM administrators WHERE username = '".mysqli_real_escape_string($this->username);
           $strSQL .= "' AND password='".$this->password."'";
-          $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-          if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->username = mysql_result($rsRES,0,'username');
-                $this->emailid = mysql_result($rsRES,0,'emailid');
-                $this->registrationdate = mysql_result($rsRES,0,'registrationdate');
-                $this->lastlogin = mysql_result($rsRES,0,'lastlogin');
+          $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+          if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
+                $this->username = mysqli_result($rsRES,0,'username');
+                $this->emailid = mysqli_result($rsRES,0,'emailid');
+                $this->registrationdate = mysqli_result($rsRES,0,'registrationdate');
+                $this->lastlogin = mysqli_result($rsRES,0,'lastlogin');
                 return true;
           }
           else{
@@ -56,7 +56,7 @@ class AdministratorSession {
 
 
 			$strSQL = "UPDATE administrators SET lastlogin=now() WHERE id='".$this->id."'";
-			mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
+			mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
             return true;
     }
 

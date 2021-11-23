@@ -38,7 +38,7 @@ if ( !defined('CHECK_INCLUDED') ){
 
 
       <tr>
-      <td><?= $conf_enable_online_editting ?></td>
+      <td><?php echo $conf_enable_online_editting; ?></td>
       <td><input <?php if(isset($_SESSION[SESSION_TITLE.'gEDIT_MODE']) && $_SESSION[SESSION_TITLE.'gEDIT_MODE'] == true){ ?> checked="true" <?php }?> type ="checkbox" name="chkeditor" value="1" size="20" /></td>
     </tr> 
 

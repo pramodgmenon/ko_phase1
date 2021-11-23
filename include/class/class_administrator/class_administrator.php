@@ -42,9 +42,9 @@ class Administrator {
               $strSQL .= addslashes(trim($this->answer))."',";
               $strSQL .= "now())";
 
-              $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-              if ( mysql_affected_rows($this->connection) > 0 ){
-                    $this->id = mysql_insert_id();;
+              $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+              if ( mysqli_affected_rows($this->connection) > 0 ){
+                    $this->id = mysqli_insert_id();;
                     return true;
               }
               else{
@@ -61,8 +61,8 @@ class Administrator {
             $strSQL .= "updated = now(), ";
 			$strSQL .= "record_user_id = '".addslashes(trim($this->record_user_id))."'";
             $strSQL .= " WHERE id = ".$this->id;
-            $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-            if ( mysql_affected_rows($this->connection) >= 0 ) {
+            $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+            if ( mysqli_affected_rows($this->connection) >= 0 ) {
                     return true;
             }
             else{
@@ -77,10 +77,10 @@ class Administrator {
 
     function change_password($newpasswd,$oldpasswd){
                     $strSQL = "UPDATE administrators SET ";
-                    $strSQL .= "password = '" .mysql_real_escape_string($newpasswd). "' ";
-                    $strSQL .= "WHERE id = '" . $this->id . "' AND password = '".mysql_real_escape_string($oldpasswd)."'";
-                    $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-                    if ( mysql_affected_rows($this->connection) > 0 ) {
+                    $strSQL .= "password = '" .mysqli_real_escape_string($newpasswd). "' ";
+                    $strSQL .= "WHERE id = '" . $this->id . "' AND password = '".mysqli_real_escape_string($oldpasswd)."'";
+                    $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+                    if ( mysqli_affected_rows($this->connection) > 0 ) {
                         return true;
                     }
                     else{
@@ -92,8 +92,8 @@ class Administrator {
 
     function exist(){
         $strSQL = "SELECT 1 FROM administrators WHERE username = '".$this->username."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
             return true;
         }
         else{
@@ -105,15 +105,15 @@ class Administrator {
 
     function get_detail(){
         $strSQL = "SELECT * FROM administrators WHERE id = ".$this->id;
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->username = mysql_result($rsRES,0,'username');
-                $this->emailid = mysql_result($rsRES,0,'emailid');
-                $this->registrationdate = mysql_result($rsRES,0,'registrationdate');
-                $this->lastlogin = mysql_result($rsRES,0,'lastlogin');
-                $this->securityquestion_id = mysql_result($rsRES,0,'securityquestion_id');
-                $this->answer = mysql_result($rsRES,0,'answer');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
+                $this->username = mysqli_result($rsRES,0,'username');
+                $this->emailid = mysqli_result($rsRES,0,'emailid');
+                $this->registrationdate = mysqli_result($rsRES,0,'registrationdate');
+                $this->lastlogin = mysqli_result($rsRES,0,'lastlogin');
+                $this->securityquestion_id = mysqli_result($rsRES,0,'securityquestion_id');
+                $this->answer = mysqli_result($rsRES,0,'answer');
                 return true;
         }
         else{
@@ -137,10 +137,10 @@ class Administrator {
 		$strSQL .= "ORDER BY username";
 
 		$strSQL_limit = sprintf("%s LIMIT %d, %d", $strSQL, $start_record, $max_records);
-		$rsRES = mysql_query($strSQL_limit, $this->connection) or die(mysql_error(). $strSQL_limit);
+		$rsRES = mysqli_query($strSQL_limit, $this->connection) or die(mysqli_error(). $strSQL_limit);
 
-        if ( mysql_num_rows($rsRES) > 0 ){
-		    while ( list ($id,$username,$emailid,$registrationdate,$image) = mysql_fetch_row($rsRES) ){
+        if ( mysqli_num_rows($rsRES) > 0 ){
+		    while ( list ($id,$username,$emailid,$registrationdate,$image) = mysqli_fetch_row($rsRES) ){
 		          $limited_data[$i]["id"] = $id;
 		          $limited_data[$i]["username"] = $username;
 		          $limited_data[$i]["emailid"] = $emailid;

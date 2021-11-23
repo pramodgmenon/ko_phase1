@@ -32,11 +32,11 @@ function user_password_reset(){
     $strTo="";
     $strSubject="";
     $strSQL = "SELECT first_name,last_name FROM users WHERE username = '".$this->username."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
         	
-		$this->first_name = mysql_result($rsRES,0,'first_name');
-		$this->last_name = mysql_result($rsRES,0,'last_name');
+		$this->first_name = mysqli_result($rsRES,0,'first_name');
+		$this->last_name = mysqli_result($rsRES,0,'last_name');
 		
 	if($this->first_name!='' && $this->last_name!=''){
 	$name=$this->first_name." ".$this->last_name;
@@ -118,11 +118,11 @@ function user_welcome_email(){
     $strTo="";
     $strSubject="";	
 	$strSQL = "SELECT first_name,last_name FROM users WHERE username = '".$this->username."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
         	
-		$this->first_name = mysql_result($rsRES,0,'first_name');
-		$this->last_name = mysql_result($rsRES,0,'last_name');
+		$this->first_name = mysqli_result($rsRES,0,'first_name');
+		$this->last_name = mysqli_result($rsRES,0,'last_name');
 		
 	if($this->first_name!='' && $this->last_name!=''){
 	$name=$this->first_name." ".$this->last_name;
@@ -173,12 +173,12 @@ function user_password_reset_by_admin($pass){
     $strTo="";
     $strSubject="";
 	$strSQL = "SELECT username,email,first_name,last_name FROM users WHERE id = '".$this->id."'";
-        $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-        if ( mysql_num_rows($rsRES) > 0 ){
-        	$this->to = mysql_result($rsRES,0,'email');
-        	$this->username = mysql_result($rsRES,0,'username');
-		$this->first_name = mysql_result($rsRES,0,'first_name');
-		$this->last_name = mysql_result($rsRES,0,'last_name');
+        $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+        if ( mysqli_num_rows($rsRES) > 0 ){
+        	$this->to = mysqli_result($rsRES,0,'email');
+        	$this->username = mysqli_result($rsRES,0,'username');
+		$this->first_name = mysqli_result($rsRES,0,'first_name');
+		$this->last_name = mysqli_result($rsRES,0,'last_name');
 		$strFrom=EMAIL_NO_REPLY;            	
 		$strTo=$this->username;
 $headers  = 'MIME-Version: 1.0' . "\r\n";

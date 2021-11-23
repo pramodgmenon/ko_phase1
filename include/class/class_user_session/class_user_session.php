@@ -31,17 +31,17 @@ class UserSession {
     }
 
     function login(){
-          $strSQL = "SELECT U.* FROM users U WHERE U.username = '".mysql_real_escape_string($this->username);
+          $strSQL = "SELECT U.* FROM users U WHERE U.username = '".mysqli_real_escape_string($this->username);
           $strSQL .= "' AND U.password='".$this->password."' AND (U.user_status_id = '".USERSTATUS_ACTIVE."')";
 		//echo $strSQL;exit();
-          $rsRES = mysql_query($strSQL,$this->connection) or die(mysql_error(). $strSQL );
-          if ( mysql_num_rows($rsRES) > 0 ){
-                $this->id = mysql_result($rsRES,0,'id');
-                $this->username = mysql_result($rsRES,0,'username');
-                $this->email = mysql_result($rsRES,0,'email');
-                $this->first_name = mysql_result($rsRES,0,'first_name');
-                $this->last_name = mysql_result($rsRES,0,'last_name');
-				$this->user_status_id=mysql_result($rsRES,0,'user_status_id');
+          $rsRES = mysqli_query($strSQL,$this->connection) or die(mysqli_error(). $strSQL );
+          if ( mysqli_num_rows($rsRES) > 0 ){
+                $this->id = mysqli_result($rsRES,0,'id');
+                $this->username = mysqli_result($rsRES,0,'username');
+                $this->email = mysqli_result($rsRES,0,'email');
+                $this->first_name = mysqli_result($rsRES,0,'first_name');
+                $this->last_name = mysqli_result($rsRES,0,'last_name');
+				$this->user_status_id=mysqli_result($rsRES,0,'user_status_id');
 
 				$_SESSION[SESSION_TITLE.'user_status_id'] = $this->user_status_id;
 				$_SESSION[SESSION_TITLE.'userid'] = $this->id;
