@@ -20,7 +20,10 @@
 			<link rel="stylesheet" href="css/skel.css" />
 			<link rel="stylesheet" href="css/style.css" />
 			<link rel="stylesheet" href="css/style-xlarge.css" />
+			
+
 		</noscript>
+		<link rel="stylesheet" href="css/font-awesome.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
 	</head>
 	<body id="top">
@@ -64,7 +67,15 @@
 								<ul class="actions">
 									<li><a href="<?php if(is_mobile()){ echo'tel:+919249561884';}else{ echo'#';} ?>" class="button">CALL +91 9249 56 1884</a></li>
 								</ul> 
-
+								<?php
+									if(is_mobile()){
+								?>
+								<ul class="actions">
+									<li><a href="http://wa.me/+919249561884" class="button"><i class="fa fa-whatsapp" aria-hidden="true"></i> Online Colsulation</a></li>
+								</ul> 
+								<?php
+									}
+								?>
 
 							</article>
 							<article class="6u$ 12u$(xsmall) ">
@@ -78,6 +89,17 @@
 								<ul class="actions">
 									<li><a href="<?php if(is_mobile()){ echo'tel:+919061751768';}else{ echo'#';} ?>" class="button">CALL +91 9061 75 1768</a></li>
 								</ul>
+								<?php
+									if(is_mobile()){
+								?>
+								<ul class="actions">
+									<li><a href="http://wa.me/+919061751768" class="button"><i class="fa fa-whatsapp" aria-hidden="true"></i> Online
+											Colsulation</a></li>
+								</ul>
+								<?php
+									}
+								?>
+
 							</article>
 
 						</div>
